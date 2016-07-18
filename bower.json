@@ -1,0 +1,21 @@
+{
+  "name": "react-demo",
+  "homepage": "https://github.com/ziyi2/react-demo",
+  "authors": [
+    "ziyi2 <673191402@qq.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "^15.2.1",
+    "bowser": "^1.4.1"
+  }
+}

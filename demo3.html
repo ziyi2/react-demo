@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSX</title>
+	<script type="text/javascript" src="public/react/react.js"></script>
+	<script type="text/javascript" src="public/react/react-dom.js"></script>
+	<script src="public/react/browser.min.js"></script>
+</head>
+<body>
+	<script type="text/babel">
+		var style = {
+			color:"red",
+			border:"1px #000 solid"
+		};
+
+		var Hello = React.createClass({
+			getName: function(){
+				if(this.props.name)
+					return this.props.name
+				else
+					return "React"
+			},
+
+			render: function(){
+				var name = this.getName();
+				return <p>Hello,{name},{this.getName()},{this.props.name || "React"}</p>
+			}
+		});
+		
+		ReactDOM.render(<div style={style}><Hello name="ziyi2"></Hello></div>,document.body);
+	</script>
+</body>
+</html>
