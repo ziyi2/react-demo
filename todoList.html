@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React-ToDoList</title>
+	<link rel="stylesheet" type="text/css" href="public/bootstrap/css/bootstrap.min.css">
+	
+	<style type="text/css">
+		.list-li {
+			padding: 20px;
+		}
+
+		.list-btn {
+			margin-top: -6px;
+		}
+
+	</style>
+
+</head>
+<body>
+	<div class="container" id="container">
+		<div class="page-header">
+  			<h1>React-toDoList</h1>
+			<div class="alert alert-info" role="alert">
+  				<h4>组件结构</h4>
+  				<ul>
+  					<li>渲染组件:ToDoList(包含AddList和ShowList)</li>
+  					<li>添加组件:AddList</li>
+  					<li>显示组件:ShowList</li>
+  				</ul>
+  			</div>
+
+
+  			<div class="alert alert-info" role="alert">
+  				<h4>受控表单</h4>
+  				<ul>
+  					<li>1.设置渲染组件的其中一个state属性为list</li>
+  					<li>2.将渲染组件的list通过props属性的形式传递给子组件AddList</li>
+  					<li>3.设置input元素的value为this.props.list,那么input元素的值受到了渲染组件的state的list控制</li>
+  					<li>4.给子组件AddList的input元素添加一个onChange事件,用来修改渲染组件的state值</li>
+  					<li>5.渲染组件的state值不能在子组件中任意修改,所以通过props属性继续给子组件AddList传递一个事件showInputList</li>
+  					<li>6.在子组件AddList的onChange事件中限制input中value的字段模式,例如这里限制最多显示10个字符</li>
+  					<li>7.在子组件AddList的onChange事件中通过父元素传递的事件showInputList间接修改渲染组件的state的list值,改变之后渲染组件自动重新渲染</li>
+  				</ul>
+
+				<h5>执行顺序</h5>
+				<ul>
+  					<li>1.渲染组件的list值传递给添加组件的input.value=list</li>
+  					<li>2.每次输入一个字符触发onChange调用showInputList修改list</li>
+  					<li>3.重新渲染</li>
+  				</ul>
+
+  			</div>
+		</div>
+
+		<div class="body" id="list-to-do">
+			
+		</div>
+	</div>
+		
+
+
+
+	<script type="text/javascript" src="public/react/react.js"></script>
+	<script type="text/javascript" src="public/react/react-dom.js"></script>
+	<script src="public/react/browser.min.js"></script>
+	<script type="text/babel">
+
+		//只是一个style示例
+		var style = {
+			marginTop: "20px"
+		};
+
+		//ToDoList组件 - 总组件
+		var ToDoList = React.createClass({
+
+			getInitialState: function(){
+				return {
+					listArr:[],
+					list:''	//受控表单输入的内容
+				}
+			},
+
+			//受控表单,每次最多只能输入十个字符
+			showInputList: function(list){
+				this.setState({
+					list:list
+				});
+			},
+
+
+			addList: function(lists){
+				this.setState({
+					listArr:lists
+				});
+			},
+
+
+			render: function(){
+				return (
+					<div>
+						{
+							/**
+							 *  addList - 将addList函数传入组件AddList,用来处理ToDoList(总组件)的lists数据,数据变化时会重新渲染DOM
+							 *
+							 * 	lists - 将lists数据通过props的形式传入ListToDo组件,用来显示lists数据
+							 */
+						}
+						<AddList addList={this.addList} showInputList={this.showInputList} list={this.state.list} listArr={this.state.listArr} />
+						<ShowList listArr={this.state.listArr} />	
+					</div>
+				);
+			}
+		});
+
+		
+
+		//AddList组件 - 新增List数据
+		var AddList = React.createClass({
+
+			handleChange: function(event){
+				var list = event.target.value.trim().substr(0,10);
+				this.props.showInputList(list);
+			},
+
+			handleClick: function(event){
+				//需要获取的是真实DOM的input数据,使用refs属性
+				var list = this.refs.addList.value;
+				if(list !== ""){	
+					this.props.listArr.push(list);
+					this.props.addList(this.props.listArr);
+				}
+			},
+
+			render: function(){
+				return (
+					<div className="row">
+						<form className="form-inline">
+							<div className="form-group">
+								<input type="text" ref='addList' value={this.props.list} onChange={this.handleChange} className="form-control" placeholder="addList" autoComplete="off" />
+							</div>	
+							<button type="button" className="btn btn-default" onClick={this.handleClick}>添加</button>
+						</form>
+					</div>	
+				);
+			}
+		});
+
+
+		//ShowList组件 - 显示List数据并可以删除
+		var ShowList = React.createClass({
+			render: function(){
+				return (
+					<div style={style} className="row">
+						<ul className='list-group'>
+						{
+							this.props.listArr.map(function(list,i){
+								return (
+									<li className='list-group-item list-li'>
+										{list}
+										<button className='btn btn-default pull-right list-btn'>
+												删除
+										</button>
+									</li>
+								);
+							})
+						}
+						</ul>
+					</div>	
+				);
+			}
+		});
+
+
+		//渲染
+		var toDoList = <ToDoList />;
+		var list_to_do = document.getElementById('list-to-do');
+		ReactDOM.render(toDoList,list_to_do);
+
+
+	</script>
+</body>
+</html>
