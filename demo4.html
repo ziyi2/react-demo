@@ -8,26 +8,25 @@
 	<script src="public/react/browser.min.js"></script>
 </head>
 <body>
+	<div id='container'></div>
 	<script type="text/babel">
-		var style = {
-			color:"red",
-			border:"1px #000 solid"
-		};
-
 		var Hello = React.createClass({
 			render: function(){
 				return <p>Hello,{
 					(function (obj){
 						if(obj.props.name)
-							return obj.props.name;
+							return obj.props.name
 						else
-							return "React";
-					})(this) 
-				}</p>
+							return "World"
+					}(this))
+				}!</p>
 			}
 		});
-		
-		ReactDOM.render(<div style={style}><Hello></Hello></div>,document.body);
+
+		var hello = <Hello name='React'/>;
+		var container = document.getElementById('container');
+		ReactDOM.render(hello,container);
+	</script>
 	</script>
 </body>
 </html>
