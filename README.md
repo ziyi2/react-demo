@@ -7,5 +7,5 @@ demo1 ~ demo4
 todoList
 
 ## next?
-How to use ES6 + Webpack + React + React-BootStrap ?
+How to use KOA + ES6 + Webpack + React + React-BootStrap ?
 
