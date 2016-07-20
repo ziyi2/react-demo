@@ -67,7 +67,7 @@
 					<li>key:节点的比较,例如列表,本来有列表1(节点),添加列表2,若没有key,则会删除列表1(节点),重新生成列表1和列表2,
 						若给出唯一标识key,则能够判断新状态state的列表1是旧状态的列表1,则不会删除节点,提升了性能
 					</li>
-					<li>refs:</li>
+					<li>refs:不能期望从render返回的组件实例中得到的是真实的已渲染的DOM元素,因为render返回的组件实例只是特定描述,或者说只是一个DOM元素的快照,例如想要给input元素一个focus焦点,不能期望从render返回的组件的input中获取焦点,因为它还只是input的一个描述,而不是真正的input实例,真正的input实例可以通过refs属性访问,当然refs属性也可以在组件中使用,通过refs可以访问底层的真实的DOM节点而不是虚拟DOM</li>
 				</ul>
 			</div>
 
@@ -80,7 +80,7 @@
 							<li>getDefaultProps(组件在第一个实例被初始化的时候调用)</li>
 							<li>getInitialState</li>
 							<li>componentWillMount</li>
-							<li>render</li>
+
 							<li>componentDidMount</li>
 						</ul>
 					</li>
@@ -117,25 +117,28 @@
 			marginTop: "20px"
 		};
 
+		//var search = 'list-group-item list-li active';
+
 		//ToDoList组件 - 总组件
 		var ToDoList = React.createClass({
 
 			getInitialState: function(){
 				return {
 					listArr:[],
-					list:''	//受控表单输入的内容
+					list:'',	//受控表单输入的内容
+					searchClass: 'list-group-item list-li'
 				}
 			},
 
-			//受控表单,每次最多只能输入十个字符
+			//受控表单,每次输入字符时重新渲染
 			showInputList: function(list){
 				this.setState({
 					list:list
 				});
 			},
 
-
-			addList: function(lists){
+			//添加和删除list时重新渲染
+			operList: function(lists){
 				this.setState({
 					listArr:lists
 				});
@@ -143,6 +146,9 @@
 
 
 			render: function(){
+
+
+
 				return (
 					<div>
 						{
@@ -152,8 +158,8 @@
 							 * 	lists - 将lists数据通过props的形式传入ListToDo组件,用来显示lists数据
 							 */
 						}
-						<AddList addList={this.addList} showInputList={this.showInputList} list={this.state.list} listArr={this.state.listArr} />
-						<ShowList listArr={this.state.listArr} />	
+						<AddList addList={this.operList} showInputList={this.showInputList} list={this.state.list} listArr={this.state.listArr} />
+						<ShowList delList={this.operList} listArr={this.state.listArr} searchClass={this.state.searchClass} />	
 					</div>
 				);
 			}
@@ -169,7 +175,7 @@
 				this.props.showInputList(list);
 			},
 
-			handleClick: function(event){
+			addList: function(event){
 				//需要获取的是真实DOM的input数据,使用refs属性
 				var list = this.refs.addList.value;
 				if(list !== ""){	
@@ -185,7 +191,8 @@
 							<div className="form-group">
 								<input type="text" ref='addList' value={this.props.list} onChange={this.handleChange} className="form-control" placeholder="addList" autoComplete="off" />
 							</div>	
-							<button type="button" className="btn btn-default" onClick={this.handleClick}>添加</button>
+							<button type="button" className="btn btn-default" key='button' onClick={this.addList}>添加</button>
+							<button type="button" className="btn btn-default" key='button1' onClick={this.searchList}>搜索</button>
 						</form>
 					</div>	
 				);
@@ -195,6 +202,13 @@
 
 		//ShowList组件 - 显示List数据并可以删除
 		var ShowList = React.createClass({
+
+			delList: function(event){
+				var index = event.target.getAttribute('data-index');
+				this.props.listArr.splice(index,1); //{/*splice方法改变原数组*/}
+				this.props.delList(this.props.listArr);
+			},
+
 			render: function(){
 				return (
 					<div style={style} className="row">
@@ -202,14 +216,14 @@
 						{
 							this.props.listArr.map(function(list,i){
 								return (
-									<li className='list-group-item list-li' key={i}>
+									<li className={this.props.searchClass} key={i}>
 										{list}
-										<button className='btn btn-default pull-right list-btn'>
+										<button className='btn btn-default pull-right list-btn' key={'button' + i}  data-index={i} onClick={this.delList}>
 												删除
 										</button>
 									</li>
 								);
-							})
+							}.bind(this)) //{/* 这里需要绑定this,否则onClick的this值指向window?*/}
 						}
 						</ul>
 					</div>	
