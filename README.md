@@ -1,5 +1,3 @@
-# React OverView
-
 ## React - HelloReact
 ### HTML
 - react.js
@@ -132,6 +130,7 @@ ReactDOM.render(hello,container);
 - componentWillMount
 - render
 - componentDidMount
+
 >提示: 按从上到下依次触发.
 
 
