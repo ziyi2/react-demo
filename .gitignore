@@ -1,0 +1,5 @@
+#public
+/public/react
+!/public/react/react.js
+!/public/react/react-dom.js
+!/public/react/bowser.min.js
