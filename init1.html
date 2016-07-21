@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSX</title>
+	<script type="text/javascript" src="public/react/react.js"></script>
+	<script type="text/javascript" src="public/react/react-dom.js"></script>
+	<script src="public/react/browser.min.js"></script>
+</head>
+<body>
+	<div id='container'></div>
+	<script type="text/babel">
+		var Hello = React.createClass({
+		
+			getDefaultProps: function(){
+				console.log("getDefaultProps");
+			},
+
+			getInitialState: function(){
+				console.log("getInitialState");
+				return null; 	
+			},
+
+			componentWillMount: function(){
+				console.log("componentWillMount");
+			},
+
+			render: function(){
+				console.log("render");
+				return <p>Hello,{
+					(function (obj){
+						if(obj.props.name)
+							return obj.props.name
+						else
+							return "World"
+					}(this))
+				}!</p>
+			},
+
+			componentDidMount: function(){
+				console.log("componentDidMount");
+			}
+		});
+
+		var hello = <Hello name='React'/>;
+		var container = document.getElementById('container');
+		ReactDOM.render(hello,container);
+	</script>
+	</script>
+</body>
+</html>
