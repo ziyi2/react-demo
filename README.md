@@ -8,15 +8,16 @@
 ``` vbscript-html
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>JSX</title>
-        <script type="text/javascript" src="public/react/react.js"></script>
-        <script type="text/javascript" src="public/react/react-dom.js"></script>
-        <script src="public/react/browser.min.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>JSX</title>
+    <script type="text/javascript" src="public/react/react.js"></script>
+    <script type="text/javascript" src="public/react/react-dom.js"></script>
+    <script src="public/react/browser.min.js"></script>
+</head>
 <body>
-<div id='container'></div>
+    <div id='container'></div>
+    
     <script type="text/babel">
         //这里放置JSX代码
     </script>
@@ -25,15 +26,15 @@
 ```
 
 ### Hello React
--  React.createClass(Obj)
--  ReactDOM.render(component/HTML DOM,fatherDom)
+ -  React.createClass(Obj)
+ -  ReactDOM.render(component/HTML DOM,fatherDom)
 ``` javascript
 var Hello = React.createClass({
-        render: function(){
+    render: function(){
         return <p>Hello,React!</p>
     }
 });
-
+    
 var hello = <Hello />;
 var container = document.getElementById('container');
 ReactDOM.render(hello,container);
@@ -43,7 +44,7 @@ ReactDOM.render(hello,container);
 In`{}`you can use JavaScript, but not include `if else` directly
 ``` javascript
 var Hello = React.createClass({
-        render: function(){
+    render: function(){
         return <p>Hello,{this.props.name ? this.props.name : 'World'}!</p>
     }
 });
@@ -77,7 +78,7 @@ We can't use `if else` in `{}`directly,but we can use `||`
 
 ``` javascript
 var Hello = React.createClass({
-        render: function(){
+    render: function(){
         return <p>Hello,{this.props.name || "World" }!</p>
     }
 });
@@ -88,7 +89,7 @@ ReactDOM.render(hello,container);
 ```
 
 User Function expression in `{}`, so you can usr all JavaScript
-
+    
 
 ``` javascript
 var Hello = React.createClass({
@@ -99,7 +100,7 @@ var Hello = React.createClass({
                     return obj.props.name
                 else
                     return "World"
-                }(this))
+            }(this))
         }!</p>
     }
 });
@@ -147,6 +148,5 @@ ReactDOM.render(hello,container);
 
 #### Destroy
 - componentWillUnmount
-
 
 
