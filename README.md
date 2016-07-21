@@ -125,18 +125,122 @@ ReactDOM.render(hello,container);
 - Destroy
 
 #### Init
-- getDefaultProps
+- getDefaultProps 
 - getInitialState
 - componentWillMount
 - render
 - componentDidMount
 
+| Col1      |    Col2 |   
+| :-------- | :------ |
+| getDefaultProps    |   只调用一次,实例之间共享引用 | 
+| getInitialState    |   初始化每个实例特有的状态,必须返回一个对象或者null | 
+| componentWillMount    |   render之前最后一次修改状态的机会 | 
+| render    |   只要一个顶层组件,不允许修改状态和DOM输出,只能访问props和state | 
+| componentDidMount    |   render渲染完成真实的DOM后触发,可以修改和操作真正的DOM |
+ 
+
 >提示: 按从上到下依次触发.
 
+``` javascript
+var Hello = React.createClass({
 
+    getDefaultProps: function(){
+        console.log("getDefaultProps");
+    },
 
+    getInitialState: function(){
+        console.log("getInitialState");
+        return null;    
+    },
 
+    componentWillMount: function(){
+        console.log("componentWillMount");
+    },
 
+    render: function(){
+        console.log("render");
+        return <p>Hello,{
+            (function (obj){
+                if(obj.props.name)
+                    return obj.props.name
+                else
+                    return "World"
+            }(this))
+        }!</p>
+    },
+
+    componentDidMount: function(){
+        console.log("componentDidMount");
+    }
+});
+
+var hello = <Hello name='React'/>;
+var container = document.getElementById('container');
+ReactDOM.render(hello,container);
+```
+
+查看控制台
+``` javascript
+getDefaultProps
+getInitialState
+componentWillMount
+render
+componentDidMount
+```
+加载jquery
+
+``` javascript
+$(document).ready(
+    function(){
+        
+        var Hello = React.createClass({
+
+            getDefaultProps: function(){
+                console.log("getDefaultProps");
+                return {
+                    name: 'ziyi2'
+                };
+            },
+
+            getInitialState: function(){
+                console.log("getInitialState");
+                return {
+                    ready:"false"
+                };
+            },
+
+            componentWillMount: function(){
+                console.log("componentWillMount");
+                this.setState({
+                    ready:"true"
+                });
+            },
+
+            render: function(){
+                console.log("render");
+                return <p>Hello,{
+                    (function (obj){
+                        if(obj.props.name)
+                            return obj.props.name
+                        else
+                            return "World"
+                    }(this))
+                }! the state: {this.state.ready}</p>
+            },
+
+            componentDidMount: function(){
+                console.log("componentDidMount");
+                $("#container").append("really Dom Oper!");
+            }
+        });
+
+        var hello = <Hello />;
+        var container = document.getElementById('container');
+        ReactDOM.render(hello,container);
+    }
+)
+```
 
 #### Running
 - componentWillReceiveProps
