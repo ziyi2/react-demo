@@ -8,19 +8,18 @@
 ``` vbscript-html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>JSX</title>
-<script type="text/javascript" src="public/react/react.js"></script>
-<script type="text/javascript" src="public/react/react-dom.js"></script>
-<script src="public/react/browser.min.js"></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>JSX</title>
+        <script type="text/javascript" src="public/react/react.js"></script>
+        <script type="text/javascript" src="public/react/react-dom.js"></script>
+        <script src="public/react/browser.min.js"></script>
+    </head>
 <body>
 <div id='container'></div>
-
-<script type="text/babel">
-//这里放置JSX代码
-</script>
+    <script type="text/babel">
+        //这里放置JSX代码
+    </script>
 </body>
 </html>
 ```
@@ -30,9 +29,9 @@
 -  ReactDOM.render(component/HTML DOM,fatherDom)
 ``` javascript
 var Hello = React.createClass({
-render: function(){
-return <p>Hello,React!</p>
-}
+        render: function(){
+        return <p>Hello,React!</p>
+    }
 });
 
 var hello = <Hello />;
@@ -44,9 +43,9 @@ ReactDOM.render(hello,container);
 In`{}`you can use JavaScript, but not include `if else` directly
 ``` javascript
 var Hello = React.createClass({
-render: function(){
-return <p>Hello,{this.props.name ? this.props.name : 'World'}!</p>
-}
+        render: function(){
+        return <p>Hello,{this.props.name ? this.props.name : 'World'}!</p>
+    }
 });
 
 var hello = <Hello name='React'/>;
@@ -57,17 +56,17 @@ Or you can use Function just like this
 
 ``` javascript
 var Hello = React.createClass({
-getName: function(){
-if(this.props.name)
-return this.props.name;
-else
-return "World";	
-},
+    getName: function(){
+        if(this.props.name)
+            return this.props.name;
+        else
+            return "World"; 
+    },
 
-render: function(){
-var name = this.getName();
-return <p>Hello,{name}!</p>
-}
+    render: function(){
+        var name = this.getName();
+        return <p>Hello,{name}!</p>
+    }
 });
 
 var hello = <Hello name='React'/>;
@@ -78,9 +77,9 @@ We can't use `if else` in `{}`directly,but we can use `||`
 
 ``` javascript
 var Hello = React.createClass({
-render: function(){
-return <p>Hello,{this.props.name || "World" }!</p>
-}
+        render: function(){
+        return <p>Hello,{this.props.name || "World" }!</p>
+    }
 });
 
 var hello = <Hello name='React'/>;
@@ -93,16 +92,16 @@ User Function expression in `{}`, so you can usr all JavaScript
 
 ``` javascript
 var Hello = React.createClass({
-render: function(){
-return <p>Hello,{
-(function (obj){
-if(obj.props.name)
-return obj.props.name
-else
-return "World"
-}(this))
-}!</p>
-}
+    render: function(){
+        return <p>Hello,{
+            (function (obj){
+                if(obj.props.name)
+                    return obj.props.name
+                else
+                    return "World"
+                }(this))
+        }!</p>
+    }
 });
 
 var hello = <Hello name='React'/>;
