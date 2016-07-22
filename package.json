@@ -1,0 +1,27 @@
+{
+  "name": "react-demo",
+  "version": "1.0.0",
+  "description": "- react.js\r - react-dom.js\r - bower.js\r ``` vbscript-html\r <!DOCTYPE html>\r <html lang=\"en\">\r <head>\r     <meta charset=\"UTF-8\">\r     <title>JSX</title>\r     <script type=\"text/javascript\" src=\"public/react/react.js\"></script>\r     <script type=\"text/javascript\" src=\"public/react/react-dom.js\"></script>\r     <script src=\"public/react/browser.min.js\"></script>\r </head>\r <body>\r     <div id='container'></div>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziyi2/react-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ziyi2/react-demo/issues"
+  },
+  "homepage": "https://github.com/ziyi2/react-demo#readme",
+  "dependencies": {
+    "babel-core": "^6.11.4",
+    "babel-loader": "^6.2.4",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.9.0",
+    "jsx-loader": "^0.13.2",
+    "style-loader": "^0.13.1"
+  }
+}
