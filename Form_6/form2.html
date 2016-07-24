@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSX</title>
+	<script type="text/javascript" src="public/jquery/jquery.js"></script>
+	<script type="text/javascript" src="public/react/react.js"></script>
+	<script type="text/javascript" src="public/react/react-dom.js"></script>
+	<script src="public/react/browser.min.js"></script>
+</head>
+<body>
+	<div id='container'></div>
+	<script type="text/babel">
+		//不可控表单
+		var UnControlForm = React.createClass({
+			submitHandler: function(event){
+				event.preventDefault();
+				var helloTo = this.refs.helloTo.value;
+				alert(helloTo);
+			},
+
+			render: function(){
+				return (
+					<form onSubmit={this.submitHandler}>
+						<input 
+							ref='helloTo'
+							type="text"
+							defaultValue="Hello React" 
+						/>
+						<button type="submit">提交</button>
+					</form>
+				)
+			}
+		});
+		
+		var myForm = <UnControlForm />;
+		var container = document.getElementById('container');
+		ReactDOM.render(myForm,container);
+	</script>
+</body>
+</html>

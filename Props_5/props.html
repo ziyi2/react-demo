@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSX</title>
+	<script type="text/javascript" src="public/jquery/jquery.js"></script>
+	<script type="text/javascript" src="public/react/react.js"></script>
+	<script type="text/javascript" src="public/react/react-dom.js"></script>
+	<script src="public/react/browser.min.js"></script>
+</head>
+<body>
+	<div id='container'></div>
+	<script type="text/babel">
+
+		$(document).ready(
+			function(){
+				//Hello Componenet
+				var Hello = React.createClass({
+
+					render: function(){
+						console.log("Hello render");
+						return <p>Hello, {this.props.name1 + ' ' + this.props.name2}!</p>
+					}
+				});
+				
+				//IncludeHello Componenet
+				var IncludeHello = React.createClass({
+					getInitialState: function(){
+						return {
+							name1: 'name1',
+							name2: 'name2'
+						}
+					},
+
+					handleChange: function(event){
+						this.setState({
+							name1: event.target.value,
+							name2: event.target.value
+						});
+					},
+					
+					render: function(){
+						return (
+							<div>
+								<Hello {...this.state} />
+								<br/>
+								<input type="text" onChange={this.handleChange} />
+							</div>	
+						)
+					}
+
+				});
+				var includeHello = <IncludeHello />;
+				var container = document.getElementById('container');
+				ReactDOM.render(includeHello,container);
+			}
+		)
+	</script>
+</body>
+</html>

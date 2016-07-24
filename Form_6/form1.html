@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSX</title>
+	<script type="text/javascript" src="public/jquery/jquery.js"></script>
+	<script type="text/javascript" src="public/react/react.js"></script>
+	<script type="text/javascript" src="public/react/react-dom.js"></script>
+	<script src="public/react/browser.min.js"></script>
+</head>
+<body>
+	<div id='container'></div>
+	<script type="text/babel">
+		//可控表单
+		var ControlForm = React.createClass({
+			getInitialState: function(){
+				return {
+				 	helloTo: "Hello World!"
+				};
+			},
+
+			handleChange: function(event){
+				this.setState({
+					helloTo: event.target.value
+				});
+			},
+
+			submitHandler: function(event){
+				event.preventDefault();
+				alert(this.state.helloTo);
+			},
+
+			render: function(){
+				return (
+					<form onSubmit={this.submitHandler}>
+						<input 
+							type="text"
+							value={this.state.helloTo}
+							onChange={this.handleChange}
+						/>
+						<button type="submit">提交</button>
+					</form>
+				)
+			}
+		});
+		
+		var myForm = <ControlForm />;
+		var container = document.getElementById('container');
+		ReactDOM.render(myForm,container);
+	</script>
+</body>
+</html>

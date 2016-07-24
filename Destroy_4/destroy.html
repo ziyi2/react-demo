@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSX</title>
+	<script type="text/javascript" src="public/jquery/jquery.js"></script>
+	<script type="text/javascript" src="public/react/react.js"></script>
+	<script type="text/javascript" src="public/react/react-dom.js"></script>
+	<script src="public/react/browser.min.js"></script>
+</head>
+<body>
+	<div id='container'></div>
+	<script type="text/babel">
+
+		$(document).ready(
+			function(){
+				//Hello Componenet
+				var Hello = React.createClass({
+
+					render: function(){
+						console.log("Hello render");
+						return <p>Hello, {this.props.name ? this.props.name : "Wrold"}!</p>
+					},
+					
+					componentWillUnmount: function(){
+					 	console.log('componentWillUnmount did!');
+					}
+					
+				});
+				
+				//IncludeHello Componenet
+				var IncludeHello = React.createClass({
+					getInitialState: function(){
+						return {
+							name: ''
+						}
+					},
+
+					handleChange: function(event){
+						this.setState({
+							name: event.target.value
+						});
+					},
+					
+					render: function(){
+						//在input元素中输入'ziyi2'
+						if(this.state.name === 'ziyi2'){
+							return(
+								<div>123</div>
+							)
+						}
+						
+						//如果返回<div>123</div>,则Hello组件就会在DOM中会卸载随后被销毁,此时可触发销毁期的钩子函数
+						return (
+							<div>
+								<Hello name={this.state.name} />
+								<br/>
+								<input type="text" onChange={this.handleChange} />
+							</div>	
+						)
+					}
+
+				});
+				var includeHello = <IncludeHello />;
+				var container = document.getElementById('container');
+				ReactDOM.render(includeHello,container);
+			}
+		)
+	</script>
+</body>
+</html>

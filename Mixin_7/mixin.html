@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSX</title>
+	<script type="text/javascript" src="public/react/react.js"></script>
+	<script type="text/javascript" src="public/react/react-dom.js"></script>
+	<script src="public/react/browser.min.js"></script>
+</head>
+<body>
+	<div id='container'></div>
+	<script type="text/babel">
+		//组件的协同分两种,纵向和横向
+		//纵向,父组件可以包含子组件
+		//横向,子组件之间的通用方法可以抽离,比如Ajax,很多组件都需要和后台交互,可以抽离Ajax方法
+		//Minxin就是一个扩展横向的插件使用方法
+		
+
+		//这是一个通用方法,插入到组件以后就相当于在组件中的方法一样 this就指向那个组件实例
+		var BindingMixin = {
+			handleChange: function(key){
+				var that = this;
+				return function(event){
+					var newState = {};
+					newState[key] = event.target.value;
+					that.setState(newState); 
+				}
+			}
+		};
+			
+		
+
+
+		var MinxinExample = React.createClass({
+			
+			mixins: [BindingMixin],
+
+			getInitialState: function(){
+				return {
+					text: 'ziyi2',
+					comment: 'this is some comment'
+				};
+			},
+
+			render: function(){
+				return (
+					<div>
+						<input type="text" placeholder="用户名" onChange={this.handleChange('text')} />
+						<textarea onChange={this.handleChange('comment')}></textarea>
+						<p>{this.state.text}</p>
+						<p>{this.state.comment}</p>
+					</div>
+				);
+			}
+
+		});
+		
+		var minxinExample = <MinxinExample />;
+		var container = document.getElementById('container');
+		ReactDOM.render(minxinExample,container);
+
+	</script>
+</body>
+</html>
