@@ -414,7 +414,8 @@ $(document).ready(
 |key|节点的比较,例如列表,本来有列表1,添加列表2,若没有key,则会删除列表1(节点),重新生成列表1和列表2,若给出唯一标识key,则能够判断新状态state的列表1是旧状态的列表1,则不会删除节点,提升性能|
 
 #### ...(ES6)
-```
+
+``` javascript
 $(document).ready(
     function(){
         //Hello Componenet

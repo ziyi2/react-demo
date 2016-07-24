@@ -7,3 +7,4 @@
 /public/jquery
 !/public/jquery/jquery.js
 .idea/
+node_modules
