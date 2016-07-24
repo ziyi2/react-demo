@@ -414,8 +414,7 @@ $(document).ready(
 |key|节点的比较,例如列表,本来有列表1,添加列表2,若没有key,则会删除列表1(节点),重新生成列表1和列表2,若给出唯一标识key,则能够判断新状态state的列表1是旧状态的列表1,则不会删除节点,提升性能|
 
 #### ...(ES6)
-
-``` javascript
+```
 $(document).ready(
     function(){
         //Hello Componenet
@@ -734,4 +733,105 @@ ReactDOM.render(minxinExample,container);
 ```
 
 ### Gulp
+Install global and local
+
+``` 
+npm install gulp -g
+npm install gulp --save
+```
+Install gulp-react
+``` 
+npm install gulp-react --save
+```
+>提示: 该插件是将`.jsx`文件转化为`.js`文件.
+
+Create `gulpfile.js`
+
+``` javascript
+var gulp = require('gulp');
+var react = require('gulp-react');
+
+gulp.task('jsx', function(){
+    gulp.src('./Gulp_8/app.jsx')
+        .pipe(react())
+        .pipe(gulp.dest('./Gulp_8/'));
+});
+
+//设置默认命令
+gulp.task('default',['jsx']);
+```
+
+执行转化命令
+
+```
+gulp
+```
+
+### Browserify
+浏览器端的代码模块化工具,即可以在浏览器端使用CommonJS规范编写代码,打包成一个.js文件的缺陷
+
+- 暂时用不到的代码也会被打包,体积大,首次加载速度慢
+- 只要一个模块更新,整个文件缓存失效
+
+Browserify解决方案: entry point,入口点技术
+每个入口点打包一个文件,两个入口点的相同依赖模块单独打包为Common.js
+可以接单单个文件问题,代码是增加依赖的维护成本,因为要自己指定入口点
+
+Install
+
+```
+npm install browserify --save
+```
+
+Install reactify 
+
+```
+npm install reactify --save
+```
+>提示:  该插件与Gulp中的gulp-react功能一样.
+
+Install vinyl-source-stream
+
+```
+npm install vinyl-source-stream --save
+```
+>提示: 把Browserify输出的代码转化为Gulp可以理解的输入代码.
+
+
+### Webpack
+
+加强版的Browserify, 针对大型的单页应用
+ - code splitting
+ code splitting可以自动完成模块的处理,比如两个文件require同一文件这种重复的部分可以自己处理,不用像Browserify那样手动完成
+ - loader
+ loader可以处理各种类型的静态文件,并且支持串联操作
+
+
+Install 
+npm install webpack jsx-loader --save
+>提示: jsx-loader和前面的reactify gulp-react功能类似.
+
+创建webpack.config.js
+
+``` javascript
+'use strict';
+
+var webpack = require('webpack');
+
+module.exports = {
+    entry: './Webpack_10/app.jsx',
+    output: {
+        path: './Webpack_10/',
+        filename: 'app.js'
+    },
+    module:{
+        loaders: [
+            {
+                test: /\.jsx$/,
+                loader: 'jsx-loader'
+            }
+        ]   
+    }
+}
+```
 
